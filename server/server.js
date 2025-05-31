@@ -10,7 +10,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 // Initialize environment variables
-dotenv.config();
+dotenv.config({ path: '.env' });
 
 // Initialize Express app
 const app = express();
@@ -40,18 +40,27 @@ app.get('*', (req, res) => {
 });
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
+const connectDB = async () => {
+  try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is not defined in environment variables');
+    }
+    
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to MongoDB');
+    
     // Start server after successful DB connection
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
-  })
-  .catch(err => {
-    console.error('MongoDB connection error:', err);
+  } catch (error) {
+    console.error('MongoDB connection error:', error);
     process.exit(1);
-  });
+  }
+};
+
+// Connect to database
+connectDB();
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
