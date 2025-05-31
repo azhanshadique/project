@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Challenges | CodeAcademy</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/challenges.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header id="main-header">
+    <div class="container">
+      <div class="logo-container">
+        <a href="index.html" class="logo">
+          <span class="logo-icon"><i class="fas fa-code"></i></span>
+          <span class="logo-text">CodeAcademy</span>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="challenges.html" class="active">Challenges</a></li>
+          <li><a href="editor.html">Code Editor</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </nav>
+      
+      <div class="user-nav">
+        <button id="login-btn" class="btn btn-secondary">Log In</button>
+        <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+        <!-- User menu (shown when logged in) -->
+        <div id="user-menu" class="user-menu hidden">
+          <div class="user-avatar">
+            <img src="./assets/images/default-avatar.png" alt="User Avatar" id="user-avatar">
+          </div>
+          <span class="username" id="username">Username</span>
+          <div class="dropdown-menu">
+            <a href="profile.html">My Profile</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logout-btn">Logout</a>
+          </div>
+        </div>
+      </div>
+      
+      <button class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Challenges Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1>Coding Challenges</h1>
+      <p>Practice your coding skills with our collection of challenges.</p>
+    </div>
+  </section>
+
+  <!-- Challenges Content -->
+  <section class="challenges-section">
+    <div class="container">
+      <div class="challenges-sidebar">
+        <div class="filter-section">
+          <h3>Filter Challenges</h3>
+          <div class="filter-group">
+            <h4>Difficulty</h4>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="easy" class="difficulty-filter"> Easy
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="medium" class="difficulty-filter"> Medium
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="hard" class="difficulty-filter"> Hard
+              </label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <h4>Category</h4>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="algorithms" class="category-filter"> Algorithms
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="data-structures" class="category-filter"> Data Structures
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="web" class="category-filter"> Web Development
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="database" class="category-filter"> Database
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="machine-learning" class="category-filter"> Machine Learning
+              </label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <h4>Source</h4>
+            <div class="filter-options">
+              <label class="filter-option">
+                <input type="checkbox" value="LeetCode" class="source-filter"> LeetCode
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="GeeksforGeeks" class="source-filter"> GeeksforGeeks
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="CodeAcademy" class="source-filter"> CodeAcademy
+              </label>
+              <label class="filter-option">
+                <input type="checkbox" value="HackerRank" class="source-filter"> HackerRank
+              </label>
+            </div>
+          </div>
+          <button id="clear-filters" class="btn btn-secondary">Clear Filters</button>
+        </div>
+      </div>
+      <div class="challenges-content">
+        <div class="challenges-header">
+          <div class="search-bar">
+            <input type="text" id="challenge-search" placeholder="Search challenges...">
+            <button id="search-btn"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="challenges-sort">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select">
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="xp-high">XP (High to Low)</option>
+              <option value="xp-low">XP (Low to High)</option>
+              <option value="difficulty-easy">Difficulty (Easy to Hard)</option>
+              <option value="difficulty-hard">Difficulty (Hard to Easy)</option>
+            </select>
+          </div>
+        </div>
+        <div class="challenges-grid" id="challenges-container">
+          <!-- Challenges will be loaded here by JavaScript -->
+          <div class="skeleton-loader challenge-card-skeleton"></div>
+          <div class="skeleton-loader challenge-card-skeleton"></div>
+          <div class="skeleton-loader challenge-card-skeleton"></div>
+          <div class="skeleton-loader challenge-card-skeleton"></div>
+          <div class="skeleton-loader challenge-card-skeleton"></div>
+          <div class="skeleton-loader challenge-card-skeleton"></div>
+        </div>
+        <div class="pagination">
+          <button id="prev-page" class="pagination-btn" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+          <div class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></div>
+          <button id="next-page" class="pagination-btn">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <a href="index.html" class="logo">
+            <span class="logo-icon"><i class="fas fa-code"></i></span>
+            <span class="logo-text">CodeAcademy</span>
+          </a>
+          <p>Learn to code with interactive lessons, challenges, and real-world projects.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Learning</h4>
+          <ul>
+            <li><a href="#">Challenges</a></li>
+            <li><a href="#">Video Tutorials</a></li>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">Learning Paths</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 CodeAcademy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <div class="form-group form-actions">
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+      
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-confirm-password">Confirm Password</label>
+          <input type="password" id="signup-confirm-password" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/auth.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/challenges.js"></script>
+</body>
+</html>

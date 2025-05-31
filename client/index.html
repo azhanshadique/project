@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAcademy - Learn to Code</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header id="main-header">
+    <div class="container">
+      <div class="logo-container">
+        <a href="index.html" class="logo">
+          <span class="logo-icon"><i class="fas fa-code"></i></span>
+          <span class="logo-text">CodeAcademy</span>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="challenges.html">Challenges</a></li>
+          <li><a href="editor.html">Code Editor</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </nav>
+      
+      <div class="user-nav">
+        <button id="login-btn" class="btn btn-secondary">Log In</button>
+        <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+        <!-- User menu (shown when logged in) -->
+        <div id="user-menu" class="user-menu hidden">
+          <div class="user-avatar">
+            <img src="./assets/images/default-avatar.png" alt="User Avatar" id="user-avatar">
+          </div>
+          <span class="username" id="username">Username</span>
+          <div class="dropdown-menu">
+            <a href="profile.html">My Profile</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logout-btn">Logout</a>
+          </div>
+        </div>
+      </div>
+      
+      <button class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Learn to Code. Build Projects. Advance Your Career.</h1>
+        <p class="hero-subtitle">Master programming with interactive challenges, video tutorials, and hands-on projects.</p>
+        <div class="hero-actions">
+          <a href="challenges.html" class="btn btn-primary">Start Coding Now</a>
+          <a href="#features" class="btn btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="./assets/images/hero-image.png" alt="CodeAcademy Learning Platform">
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Learning Paths -->
+  <section class="featured-paths">
+    <div class="container">
+      <h2 class="section-title">Featured Learning Paths</h2>
+      <div class="path-cards">
+        <div class="path-card">
+          <div class="path-icon"><i class="fas fa-laptop-code"></i></div>
+          <h3>Web Development</h3>
+          <p>Learn HTML, CSS, JavaScript, and modern frameworks to build responsive websites and web applications.</p>
+          <a href="#" class="btn btn-outline">Explore Path</a>
+        </div>
+        <div class="path-card">
+          <div class="path-icon"><i class="fas fa-database"></i></div>
+          <h3>Data Structures</h3>
+          <p>Master algorithms and data structures essential for efficient problem-solving and technical interviews.</p>
+          <a href="#" class="btn btn-outline">Explore Path</a>
+        </div>
+        <div class="path-card">
+          <div class="path-icon"><i class="fas fa-server"></i></div>
+          <h3>Backend Development</h3>
+          <p>Build scalable server-side applications with Node.js, Express, and MongoDB.</p>
+          <a href="#" class="btn btn-outline">Explore Path</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Videos Section -->
+  <section class="featured-videos" id="videos">
+    <div class="container">
+      <h2 class="section-title">Featured Video Tutorials</h2>
+      <div class="video-grid" id="video-container">
+        <!-- Video cards will be loaded here by JavaScript -->
+        <div class="skeleton-loader"></div>
+        <div class="skeleton-loader"></div>
+        <div class="skeleton-loader"></div>
+      </div>
+      <div class="section-action">
+        <a href="#" class="btn btn-secondary">View All Videos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Articles Section -->
+  <section class="featured-articles" id="articles">
+    <div class="container">
+      <h2 class="section-title">Latest Articles</h2>
+      <div class="article-grid" id="article-container">
+        <!-- Article cards will be loaded here by JavaScript -->
+        <div class="skeleton-loader article-skeleton"></div>
+        <div class="skeleton-loader article-skeleton"></div>
+        <div class="skeleton-loader article-skeleton"></div>
+      </div>
+      <div class="section-action">
+        <a href="#" class="btn btn-secondary">Read All Articles</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Challenges Section -->
+  <section class="featured-challenges" id="challenges">
+    <div class="container">
+      <h2 class="section-title">Popular Coding Challenges</h2>
+      <div class="challenge-list" id="challenge-container">
+        <!-- Challenge items will be loaded here by JavaScript -->
+        <div class="skeleton-loader challenge-skeleton"></div>
+        <div class="skeleton-loader challenge-skeleton"></div>
+        <div class="skeleton-loader challenge-skeleton"></div>
+      </div>
+      <div class="section-action">
+        <a href="challenges.html" class="btn btn-primary">All Challenges</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose CodeAcademy?</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-code"></i></div>
+          <h3>Interactive Coding</h3>
+          <p>Write and run code directly in your browser with our online code editor.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-video"></i></div>
+          <h3>Video Tutorials</h3>
+          <p>Learn from high-quality video tutorials created by industry experts.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+          <h3>Hands-on Challenges</h3>
+          <p>Practice with real-world coding challenges and build your portfolio.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+          <h3>Earn Badges</h3>
+          <p>Track your progress and earn badges as you complete courses and challenges.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-users"></i></div>
+          <h3>Community</h3>
+          <p>Join a community of learners and get help when you need it.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Progress Tracking</h3>
+          <p>Track your learning progress with detailed analytics and insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Start Your Coding Journey?</h2>
+        <p>Join thousands of students learning to code with CodeAcademy.</p>
+        <a href="#" id="cta-signup-btn" class="btn btn-primary">Create Free Account</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <a href="index.html" class="logo">
+            <span class="logo-icon"><i class="fas fa-code"></i></span>
+            <span class="logo-text">CodeAcademy</span>
+          </a>
+          <p>Learn to code with interactive lessons, challenges, and real-world projects.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Learning</h4>
+          <ul>
+            <li><a href="#">Challenges</a></li>
+            <li><a href="#">Video Tutorials</a></li>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">Learning Paths</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 CodeAcademy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <div class="form-group form-actions">
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+      
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-confirm-password">Confirm Password</label>
+          <input type="password" id="signup-confirm-password" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/auth.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/home.js"></script>
+</body>
+</html>

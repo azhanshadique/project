@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | CodeAcademy</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/dashboard.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header id="main-header">
+    <div class="container">
+      <div class="logo-container">
+        <a href="index.html" class="logo">
+          <span class="logo-icon"><i class="fas fa-code"></i></span>
+          <span class="logo-text">CodeAcademy</span>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="challenges.html">Challenges</a></li>
+          <li><a href="editor.html">Code Editor</a></li>
+          <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        </ul>
+      </nav>
+      
+      <div class="user-nav">
+        <button id="login-btn" class="btn btn-secondary">Log In</button>
+        <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+        <!-- User menu (shown when logged in) -->
+        <div id="user-menu" class="user-menu hidden">
+          <div class="user-avatar">
+            <img src="./assets/images/default-avatar.png" alt="User Avatar" id="user-avatar">
+          </div>
+          <span class="username" id="username">Username</span>
+          <div class="dropdown-menu">
+            <a href="profile.html">My Profile</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logout-btn">Logout</a>
+          </div>
+        </div>
+      </div>
+      
+      <button class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Auth Check -->
+  <div id="auth-check" class="container auth-required hidden">
+    <div class="auth-required-message">
+      <div class="auth-icon"><i class="fas fa-lock"></i></div>
+      <h2>Authentication Required</h2>
+      <p>You need to be logged in to view your dashboard.</p>
+      <div class="auth-actions">
+        <button id="auth-login-btn" class="btn btn-primary">Log In</button>
+        <button id="auth-signup-btn" class="btn btn-secondary">Sign Up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div id="dashboard-content">
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+      <div class="container">
+        <div class="user-profile-summary">
+          <div class="user-avatar large">
+            <img src="./assets/images/default-avatar.png" alt="User Avatar" id="dashboard-avatar">
+          </div>
+          <div class="user-info">
+            <h1 id="dashboard-username">Username</h1>
+            <div class="user-stats">
+              <div class="user-stat">
+                <div class="stat-icon"><i class="fas fa-code"></i></div>
+                <div class="stat-value" id="challenges-completed">0</div>
+                <div class="stat-label">Challenges</div>
+              </div>
+              <div class="user-stat">
+                <div class="stat-icon"><i class="fas fa-star"></i></div>
+                <div class="stat-value" id="xp-points">0</div>
+                <div class="stat-label">XP</div>
+              </div>
+              <div class="user-stat">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-value" id="user-level">1</div>
+                <div class="stat-label">Level</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="level-progress">
+          <div class="level-progress-bar">
+            <div class="progress-bar-fill" id="level-progress-fill" style="width: 65%;"></div>
+          </div>
+          <div class="level-labels">
+            <div class="current-level">Level <span id="current-level">5</span></div>
+            <div class="xp-progress"><span id="current-xp">650</span>/<span id="next-level-xp">1000</span> XP</div>
+            <div class="next-level">Level <span id="next-level">6</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Main Content -->
+    <section class="dashboard-main">
+      <div class="container">
+        <div class="dashboard-grid">
+          <!-- Progress Summary -->
+          <div class="dashboard-card progress-summary">
+            <div class="card-header">
+              <h2 class="card-title">Learning Progress</h2>
+            </div>
+            <div class="card-content">
+              <div class="chart-container">
+                <canvas id="progress-chart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Activity Summary -->
+          <div class="dashboard-card activity-summary">
+            <div class="card-header">
+              <h2 class="card-title">Activity</h2>
+            </div>
+            <div class="card-content">
+              <div class="chart-container">
+                <canvas id="activity-chart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Achievements -->
+          <div class="dashboard-card achievements">
+            <div class="card-header">
+              <h2 class="card-title">Badges & Achievements</h2>
+            </div>
+            <div class="card-content">
+              <div class="badges-grid" id="badges-container">
+                <!-- Badges will be loaded here by JavaScript -->
+                <div class="badge-item">
+                  <div class="badge-icon"><i class="fas fa-award"></i></div>
+                  <div class="badge-info">
+                    <div class="badge-name">First Challenge</div>
+                    <div class="badge-description">Completed your first coding challenge</div>
+                  </div>
+                </div>
+                <div class="badge-item locked">
+                  <div class="badge-icon"><i class="fas fa-fire"></i></div>
+                  <div class="badge-info">
+                    <div class="badge-name">3-Day Streak</div>
+                    <div class="badge-description">Practiced coding for 3 consecutive days</div>
+                  </div>
+                </div>
+                <div class="badge-item locked">
+                  <div class="badge-icon"><i class="fas fa-graduation-cap"></i></div>
+                  <div class="badge-info">
+                    <div class="badge-name">Level 5 Achiever</div>
+                    <div class="badge-description">Reached level 5</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Recent Activity -->
+          <div class="dashboard-card recent-activity">
+            <div class="card-header">
+              <h2 class="card-title">Recent Activity</h2>
+            </div>
+            <div class="card-content">
+              <div class="activity-list" id="activity-list">
+                <!-- Activity items will be loaded here by JavaScript -->
+                <div class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-check-circle"></i></div>
+                  <div class="activity-details">
+                    <div class="activity-title">Completed Challenge: Two Sum</div>
+                    <div class="activity-meta">2 hours ago • +10 XP</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-code"></i></div>
+                  <div class="activity-details">
+                    <div class="activity-title">Attempted Challenge: Binary Search</div>
+                    <div class="activity-meta">Yesterday • +0 XP</div>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="activity-details">
+                    <div class="activity-title">Earned Badge: First Challenge</div>
+                    <div class="activity-meta">3 days ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Recommended Challenges -->
+          <div class="dashboard-card recommended-challenges">
+            <div class="card-header">
+              <h2 class="card-title">Recommended For You</h2>
+            </div>
+            <div class="card-content">
+              <div class="challenge-recommendations" id="recommended-challenges">
+                <!-- Recommended challenges will be loaded here by JavaScript -->
+                <div class="recommendation-item">
+                  <div class="recommendation-info">
+                    <div class="recommendation-title">Valid Parentheses</div>
+                    <div class="recommendation-meta">
+                      <span class="difficulty easy">Easy</span>
+                      <span class="category">Algorithms</span>
+                    </div>
+                  </div>
+                  <a href="#" class="btn btn-small">Solve</a>
+                </div>
+                <div class="recommendation-item">
+                  <div class="recommendation-info">
+                    <div class="recommendation-title">Merge Two Sorted Lists</div>
+                    <div class="recommendation-meta">
+                      <span class="difficulty easy">Easy</span>
+                      <span class="category">Data Structures</span>
+                    </div>
+                  </div>
+                  <a href="#" class="btn btn-small">Solve</a>
+                </div>
+                <div class="recommendation-item">
+                  <div class="recommendation-info">
+                    <div class="recommendation-title">Maximum Subarray</div>
+                    <div class="recommendation-meta">
+                      <span class="difficulty medium">Medium</span>
+                      <span class="category">Algorithms</span>
+                    </div>
+                  </div>
+                  <a href="#" class="btn btn-small">Solve</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Leaderboard -->
+          <div class="dashboard-card leaderboard">
+            <div class="card-header">
+              <h2 class="card-title">Leaderboard</h2>
+            </div>
+            <div class="card-content">
+              <div class="leaderboard-list" id="leaderboard-list">
+                <!-- Leaderboard items will be loaded here by JavaScript -->
+                <div class="leaderboard-item current-user">
+                  <div class="leaderboard-rank">5</div>
+                  <div class="leaderboard-user">
+                    <div class="user-avatar small">
+                      <img src="./assets/images/default-avatar.png" alt="User Avatar">
+                    </div>
+                    <div class="leaderboard-username">You</div>
+                  </div>
+                  <div class="leaderboard-xp">650 XP</div>
+                </div>
+                <div class="leaderboard-separator">
+                  <div class="separator-line"></div>
+                  <div class="separator-text">Top Users</div>
+                  <div class="separator-line"></div>
+                </div>
+                <div class="leaderboard-item">
+                  <div class="leaderboard-rank">1</div>
+                  <div class="leaderboard-user">
+                    <div class="user-avatar small">
+                      <img src="./assets/images/avatars/user1.jpg" alt="User Avatar">
+                    </div>
+                    <div class="leaderboard-username">codemaster</div>
+                  </div>
+                  <div class="leaderboard-xp">1250 XP</div>
+                </div>
+                <div class="leaderboard-item">
+                  <div class="leaderboard-rank">2</div>
+                  <div class="leaderboard-user">
+                    <div class="user-avatar small">
+                      <img src="./assets/images/avatars/user2.jpg" alt="User Avatar">
+                    </div>
+                    <div class="leaderboard-username">devguru</div>
+                  </div>
+                  <div class="leaderboard-xp">980 XP</div>
+                </div>
+                <div class="leaderboard-item">
+                  <div class="leaderboard-rank">3</div>
+                  <div class="leaderboard-user">
+                    <div class="user-avatar small">
+                      <img src="./assets/images/avatars/user3.jpg" alt="User Avatar">
+                    </div>
+                    <div class="leaderboard-username">pythonista</div>
+                  </div>
+                  <div class="leaderboard-xp">840 XP</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-logo">
+          <a href="index.html" class="logo">
+            <span class="logo-icon"><i class="fas fa-code"></i></span>
+            <span class="logo-text">CodeAcademy</span>
+          </a>
+          <p>Learn to code with interactive lessons, challenges, and real-world projects.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Learning</h4>
+          <ul>
+            <li><a href="#">Challenges</a></li>
+            <li><a href="#">Video Tutorials</a></li>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">Learning Paths</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 CodeAcademy. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <div class="form-group form-actions">
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+      
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-confirm-password">Confirm Password</label>
+          <input type="password" id="signup-confirm-password" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/auth.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/dashboard.js"></script>
+</body>
+</html>

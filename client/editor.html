@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Editor | CodeAcademy</title>
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="./css/editor.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/images/favicon.png">
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Code Mirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header id="main-header">
+    <div class="container">
+      <div class="logo-container">
+        <a href="index.html" class="logo">
+          <span class="logo-icon"><i class="fas fa-code"></i></span>
+          <span class="logo-text">CodeAcademy</span>
+        </a>
+      </div>
+      
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="challenges.html">Challenges</a></li>
+          <li><a href="editor.html" class="active">Code Editor</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+      </nav>
+      
+      <div class="user-nav">
+        <button id="login-btn" class="btn btn-secondary">Log In</button>
+        <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+        <!-- User menu (shown when logged in) -->
+        <div id="user-menu" class="user-menu hidden">
+          <div class="user-avatar">
+            <img src="./assets/images/default-avatar.png" alt="User Avatar" id="user-avatar">
+          </div>
+          <span class="username" id="username">Username</span>
+          <div class="dropdown-menu">
+            <a href="profile.html">My Profile</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logout-btn">Logout</a>
+          </div>
+        </div>
+      </div>
+      
+      <button class="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Editor Workspace -->
+  <div class="editor-workspace">
+    <!-- Problem Panel -->
+    <div class="problem-panel" id="problem-panel">
+      <div class="panel-header">
+        <h2 id="challenge-title">Challenge: Two Sum</h2>
+        <div class="difficulty-badge" id="challenge-difficulty">Medium</div>
+      </div>
+      
+      <div class="panel-content">
+        <div class="description-section">
+          <h3>Description</h3>
+          <div id="challenge-description">
+            <p>Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</p>
+            <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+          </div>
+        </div>
+        
+        <div class="examples-section">
+          <h3>Examples</h3>
+          <div class="example">
+            <div class="example-title">Example 1:</div>
+            <pre class="example-code"><code>Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</code></pre>
+          </div>
+          <div class="example">
+            <div class="example-title">Example 2:</div>
+            <pre class="example-code"><code>Input: nums = [3,2,4], target = 6
+Output: [1,2]</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <div class="panel-tabs">
+        <button class="panel-tab active" data-tab="description">Description</button>
+        <button class="panel-tab" data-tab="solution">Solution</button>
+        <button class="panel-tab" data-tab="hints">Hints</button>
+      </div>
+    </div>
+    
+    <!-- Code Editor Panel -->
+    <div class="editor-panel">
+      <div class="editor-toolbar">
+        <div class="language-selector">
+          <label for="language-select">Language:</label>
+          <select id="language-select">
+            <option value="javascript">JavaScript</option>
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </select>
+        </div>
+        
+        <div class="editor-actions">
+          <button id="run-code-btn" class="btn btn-primary"><i class="fas fa-play"></i> Run Code</button>
+          <button id="submit-code-btn" class="btn btn-secondary"><i class="fas fa-check"></i> Submit</button>
+          <button id="reset-code-btn" class="btn btn-outline"><i class="fas fa-undo"></i> Reset</button>
+        </div>
+      </div>
+      
+      <div class="code-editor-container">
+        <textarea id="code-editor"></textarea>
+      </div>
+      
+      <div class="console-panel">
+        <div class="console-header">
+          <h3>Console</h3>
+          <button id="clear-console-btn" class="btn btn-small"><i class="fas fa-trash"></i> Clear</button>
+        </div>
+        <div class="console-output" id="console-output">
+          <div class="console-welcome">
+            <p>Welcome to the CodeAcademy Code Editor!</p>
+            <p>Click "Run Code" to execute your code and see the output here.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Test Cases Panel -->
+    <div class="test-cases-panel">
+      <div class="panel-header">
+        <h3>Test Cases</h3>
+        <div class="test-actions">
+          <button id="run-tests-btn" class="btn btn-small"><i class="fas fa-vial"></i> Run Tests</button>
+        </div>
+      </div>
+      
+      <div class="test-cases-list" id="test-cases-list">
+        <div class="test-case">
+          <div class="test-case-header">
+            <div class="test-case-title">Test Case 1</div>
+            <div class="test-case-status pending"><i class="fas fa-circle"></i> Pending</div>
+          </div>
+          <div class="test-case-details">
+            <div class="test-case-input">
+              <div class="test-label">Input:</div>
+              <pre><code>[2,7,11,15]
+9</code></pre>
+            </div>
+            <div class="test-case-expected">
+              <div class="test-label">Expected:</div>
+              <pre><code>[0,1]</code></pre>
+            </div>
+            <div class="test-case-actual hidden">
+              <div class="test-label">Your Output:</div>
+              <pre><code></code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="test-case">
+          <div class="test-case-header">
+            <div class="test-case-title">Test Case 2</div>
+            <div class="test-case-status pending"><i class="fas fa-circle"></i> Pending</div>
+          </div>
+          <div class="test-case-details">
+            <div class="test-case-input">
+              <div class="test-label">Input:</div>
+              <pre><code>[3,2,4]
+6</code></pre>
+            </div>
+            <div class="test-case-expected">
+              <div class="test-label">Expected:</div>
+              <pre><code>[1,2]</code></pre>
+            </div>
+            <div class="test-case-actual hidden">
+              <div class="test-label">Your Output:</div>
+              <pre><code></code></pre>
+            </div>
+          </div>
+        </div>
+        <div class="test-case">
+          <div class="test-case-header">
+            <div class="test-case-title">Test Case 3</div>
+            <div class="test-case-status pending"><i class="fas fa-circle"></i> Pending</div>
+          </div>
+          <div class="test-case-details">
+            <div class="test-case-input">
+              <div class="test-label">Input:</div>
+              <pre><code>[3,3]
+6</code></pre>
+            </div>
+            <div class="test-case-expected">
+              <div class="test-label">Expected:</div>
+              <pre><code>[0,1]</code></pre>
+            </div>
+            <div class="test-case-actual hidden">
+              <div class="test-label">Your Output:</div>
+              <pre><code></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div id="result-modal" class="modal">
+    <div class="modal-content result-modal-content">
+      <span class="close-modal">&times;</span>
+      <div id="result-success" class="result-message success hidden">
+        <div class="result-icon"><i class="fas fa-check-circle"></i></div>
+        <h2>All Tests Passed!</h2>
+        <p>Congratulations! Your solution passed all test cases.</p>
+        <div class="result-stats">
+          <div class="stat-item">
+            <div class="stat-label">Runtime:</div>
+            <div class="stat-value" id="runtime-value">0.5ms</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Memory Usage:</div>
+            <div class="stat-value" id="memory-value">42.1MB</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">XP Earned:</div>
+            <div class="stat-value" id="xp-value">+15 XP</div>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button id="next-challenge-btn" class="btn btn-primary">Next Challenge</button>
+          <button class="btn btn-secondary close-result">Continue Editing</button>
+        </div>
+      </div>
+      
+      <div id="result-failure" class="result-message failure">
+        <div class="result-icon"><i class="fas fa-times-circle"></i></div>
+        <h2>Some Tests Failed</h2>
+        <p>Your solution failed on some test cases. Check the test panel for details.</p>
+        <div class="result-stats">
+          <div class="stat-item">
+            <div class="stat-label">Tests Passed:</div>
+            <div class="stat-value" id="tests-passed">1/3</div>
+          </div>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-primary close-result">Continue Coding</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login">Log In</button>
+        <button class="auth-tab" data-tab="signup">Sign Up</button>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <div class="form-group form-actions">
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <button type="submit" class="btn btn-primary">Log In</button>
+        </div>
+      </form>
+      
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-email">Email</label>
+          <input type="email" id="signup-email" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required>
+        </div>
+        <div class="form-group">
+          <label for="signup-confirm-password">Confirm Password</label>
+          <input type="password" id="signup-confirm-password" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/editor.js"></script>
+</body>
+</html>
